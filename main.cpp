@@ -80,6 +80,7 @@ TEST(TestsShapes, TestCpp) {
 						"#                                                                             #\n"
 						"###############################################################################\n";
 
+	std::cout << output.str() << std::endl;
 	ASSERT_EQ(answer, output.str());
 }
 
@@ -102,7 +103,7 @@ TEST(TestsShapes, TestCow) {
             R"(#     ||     ||    #)""\n"
             R"(####################)""\n";
 	// clang-format on
-
+	std::cout << output.str() << std::endl;
 	ASSERT_EQ(answer, output.str());
 }
 
@@ -129,11 +130,12 @@ TEST(TestsShapes, TestSimple) {
 
 TEST(TestsShapes, TestSimple_next) {
 	Canvas canvas{{3, 3}};
-	Image image = {"oo", "oo"};
+	Image image = {"12", "34"};
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>(move(image));
 	ASSERT_EQ(texture->GetSize().width, 2);
 	ASSERT_EQ(texture->GetSize().height, 2);
-	ASSERT_EQ(texture->GetPixelColor({0,0}), 'a');
+	ASSERT_EQ(texture->GetPixelColor({0, 0}), '1');
+	ASSERT_EQ(texture->GetPixelColor({0, 10000}), '.');
 	canvas.AddShape(ShapeType::RECTANGLE, {0, 0}, {2, 2}, texture);
 
 	std::stringstream output;
@@ -143,8 +145,34 @@ TEST(TestsShapes, TestSimple_next) {
 	// Здесь уместно использовать сырые литералы, т.к. в текстуре есть символы '\'
 	const auto answer =
 			R"(#####)""\n"
-			R"(#oo #)""\n"
-			R"(#oo #)""\n"
+			R"(#12 #)""\n"
+			R"(#34 #)""\n"
+			R"(#   #)""\n"
+			R"(#####)""\n";
+	// clang-format on
+
+	ASSERT_EQ(answer, output.str());
+}
+
+TEST(TestsShapes, TestSimple_next2) {
+	Canvas canvas{{3, 3}};
+	Image image = {"12", "34"};
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>(move(image));
+	ASSERT_EQ(texture->GetSize().width, 2);
+	ASSERT_EQ(texture->GetSize().height, 2);
+	ASSERT_EQ(texture->GetPixelColor({0, 0}), '1');
+	ASSERT_EQ(texture->GetPixelColor({0, 10000}), '.');
+	canvas.AddShape(ShapeType::RECTANGLE, {1, 0}, {2, 2}, texture);
+
+	std::stringstream output;
+	canvas.Print(output);
+
+	// clang-format off
+	// Здесь уместно использовать сырые литералы, т.к. в текстуре есть символы '\'
+	const auto answer =
+			R"(#####)""\n"
+			R"(# 12#)""\n"
+			R"(# 34#)""\n"
 			R"(#   #)""\n"
 			R"(#####)""\n";
 	// clang-format on

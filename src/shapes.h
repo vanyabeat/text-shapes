@@ -1,8 +1,8 @@
 #pragma once
 #include "texture.h"
 
+#include "iostream"
 #include <memory>
-
 // Поддерживаемые виды фигур: прямоугольник и эллипс
 enum class ShapeType { RECTANGLE,
 					   ELLIPSE };
@@ -11,24 +11,19 @@ class Shape {
 public:
 	// Фигура после создания имеет нулевые координаты и размер,
 	// а также не имеет текстуры
-	explicit Shape(ShapeType type) {
-		// Заглушка. Реализуйте конструктор самостоятельно
-		(void) type;
+	explicit Shape(ShapeType type) : type_(type) {
 	}
 
 	void SetPosition(Point pos) {
-		(void) pos;
-		// Заглушка. Реализуйте метод самостоятельно
+		position_ = pos;
 	}
 
 	void SetSize(Size size) {
-		(void) size;
-		// Заглушка. Реализуйте метод самостоятельно
+		size_ = size;
 	}
 
 	void SetTexture(std::shared_ptr<Texture> texture) {
-		(void) texture;
-		// Заглушка. Реализуйте метод самостоятельно
+		texture_ = std::move(texture);
 	}
 
 	// Рисует фигуру на указанном изображении
@@ -37,7 +32,25 @@ public:
 	// должны отображаться с помощью символа точка '.'
 	// Части фигуры, выходящие за границы объекта image, должны отбрасываться.
 	void Draw(Image &image) const {
-		(void) image;
-		// Заглушка. Реализуйте метод самостоятельно
+		auto img_size = GetImageSize(image);
+		for (auto y = 0; y < size_.height; ++y) {
+			for (auto x = 0; x < size_.width; ++x) {
+				if (IsPointInEllipse({x, y}, size_) && type_ == ShapeType::ELLIPSE) {
+					image[y + position_.y][x + position_.x] = texture_->GetPixelColor({x, y});
+					continue;
+				} else {
+					if (type_ == ShapeType::RECTANGLE) {
+						image[y + position_.y][x + position_.x] = texture_->GetPixelColor({x, y});
+						continue;
+					}
+				}
+			}
+		}
 	}
+
+private:
+	ShapeType type_{};
+	Point position_{};
+	Size size_{};
+	std::shared_ptr<Texture> texture_ = nullptr;
 };

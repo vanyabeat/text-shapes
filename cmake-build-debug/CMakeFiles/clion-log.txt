@@ -1,0 +1,36 @@
+conan install /Users/vanyabeat/Developer/yandex-praktikum/shapes-project -if=/Users/vanyabeat/Developer/yandex-praktikum/shapes-project/cmake-build-debug -pr=default
+Configuration:
+[settings]
+arch=x86_64
+arch_build=x86_64
+build_type=Release
+compiler=apple-clang
+compiler.libcxx=libc++
+compiler.version=12.0
+os=Macos
+os_build=Macos
+[options]
+[build_requires]
+[env]
+
+conanfile.txt: Installing package
+Requirements
+    gtest/1.10.0 from 'conan-center' - Cache
+Packages
+    gtest/1.10.0:9e8e90672d7a216fdaac8d6a37a0bbd4a25f56a6 - Cache
+
+Installing (downloading, building) binaries...
+gtest/1.10.0: Already installed!
+conanfile.txt: Generator cmake created conanbuildinfo.cmake
+conanfile.txt: Generator txt created conanbuildinfo.txt
+conanfile.txt: Generated conaninfo.txt
+conanfile.txt: Generated graphinfo
+"/Users/vanyabeat/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/203.6682.181/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/vanyabeat/Developer/yandex-praktikum/shapes-project
+-- Conan: Adjusting output directories
+-- Conan: Using cmake global configuration
+-- Conan: Adjusting default RPATHs Conan policies
+-- Conan: Adjusting language standard
+-- Current conanbuildinfo.cmake directory: /Users/vanyabeat/Developer/yandex-praktikum/shapes-project/cmake-build-debug
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/vanyabeat/Developer/yandex-praktikum/shapes-project/cmake-build-debug
